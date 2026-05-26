@@ -1,5 +1,3 @@
-Código completo corrigido
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -7,6 +5,7 @@ Código completo corrigido
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nosso Cantinho ❤️</title>
 
+    <!-- Tailwind CSS e Lucide Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -22,38 +21,30 @@ Código completo corrigido
         }
 
         .glass-card {
-            background: rgba(255,255,255,0.85);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,192,203,0.4);
+            border: 1px solid rgba(255, 192, 203, 0.4);
+            transition: all 0.3s ease;
         }
 
         .dark .glass-card {
-            background: rgba(30,25,35,0.85);
-        }
-
-        .polaroid {
-            background: white;
-            padding: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,.1);
-            transition: .3s;
-        }
-
-        .polaroid:hover {
-            transform: scale(1.05);
-        }
-
-        .dark .polaroid {
-            background: #2d2635;
+            background: rgba(30, 25, 35, 0.85);
+            border: 1px solid rgba(244, 63, 94, 0.2);
         }
 
         @keyframes floatUp {
             0% {
-                transform: translateY(100vh) scale(0);
+                transform: translateY(105vh) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
                 opacity: 1;
             }
-
+            90% {
+                opacity: 0.8;
+            }
             100% {
-                transform: translateY(-10vh) scale(1);
+                transform: translateY(-10vh) scale(1.2) rotate(360deg);
                 opacity: 0;
             }
         }
@@ -61,7 +52,7 @@ Código completo corrigido
         .heart-particle {
             position: fixed;
             bottom: -50px;
-            animation: floatUp 6s linear forwards;
+            animation: floatUp 5s linear forwards;
             pointer-events: none;
             z-index: 999;
         }
@@ -87,29 +78,34 @@ Código completo corrigido
     </script>
 </head>
 
-<body class="bg-romance-50 text-gray-800 dark:bg-romance-darkbg dark:text-white min-h-screen pb-16">
+<body class="bg-romance-50 text-gray-800 dark:bg-romance-darkbg dark:text-white min-h-screen pb-16 transition-colors duration-300">
 
 <div class="container mx-auto px-4 max-w-2xl py-6">
 
+    <!-- Header -->
     <header class="flex justify-between items-center mb-8">
         <div class="flex items-center gap-2">
-            <i data-lucide="heart" class="text-romance-500 fill-romance-500"></i>
-            <span class="font-bold">Thierry & Mony</span>
+            <i data-lucide="heart" class="text-romance-500 fill-romance-500 w-6 h-6"></i>
+            <span class="font-bold text-lg">Thierry & Mony</span>
         </div>
 
-        <button onclick="trocarTema()" class="bg-white dark:bg-zinc-800 p-3 rounded-full shadow">
-            <i data-lucide="moon" id="theme-icon"></i>
+        <button onclick="trocarTema()" class="bg-white dark:bg-zinc-800 p-3 rounded-full shadow-md hover:scale-105 transition-transform">
+            <i data-lucide="moon" id="theme-icon" class="w-5 h-5 text-romance-600 dark:text-romance-300"></i>
         </button>
     </header>
 
+    <!-- Título Principal -->
     <div class="text-center mb-8">
-        <h1 class="text-5xl font-romance font-bold text-romance-600">
+        <h1 class="text-4xl md:text-5xl font-romance font-bold text-romance-600 dark:text-romance-300">
             Nosso Cantinho ❤️
         </h1>
     </div>
 
-    <section class="glass-card rounded-3xl p-6 mb-6">
-        <h2 class="text-xl font-bold mb-4">Nossa Playlist 🎵</h2>
+    <!-- Seção Playlist -->
+    <section class="glass-card rounded-3xl p-6 mb-6 shadow-sm">
+        <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+            <i data-lucide="music" class="w-5 h-5 text-romance-500"></i> Nossa Playlist
+        </h2>
 
         <iframe
             style="border-radius:12px"
@@ -123,128 +119,163 @@ Código completo corrigido
         </iframe>
     </section>
 
-    <section class="glass-card rounded-3xl p-6 mb-6">
-        <h2 class="text-xl font-bold mb-4">Humor do Dia 😊</h2>
+    <!-- Seção Humor -->
+    <section class="glass-card rounded-3xl p-6 mb-6 shadow-sm">
+        <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+            <i data-lucide="smile" class="w-5 h-5 text-romance-500"></i> Humor do Dia
+        </h2>
 
-        <div class="grid grid-cols-2 gap-3 mb-4" id="humor-thierry">
-            <button onclick="definirHumor('thierry', 'Feliz', '😊')" class="humor-btn border p-3 rounded-2xl">😊 Feliz</button>
-
-            <button onclick="definirHumor('thierry', 'Cansado', '😴')" class="humor-btn border p-3 rounded-2xl">😴 Cansado</button>
-
-            <button onclick="definirHumor('thierry', 'Saudade', '🥺')" class="humor-btn border p-3 rounded-2xl">🥺 Saudade</button>
-
-            <button onclick="definirHumor('thierry', 'Estressado', '😡')" class="humor-btn border p-3 rounded-2xl">😡 Estressado</button>
+        <!-- Thierry -->
+        <div class="mb-6">
+            <p class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">Humor do Thierry:</p>
+            <div class="grid grid-cols-2 gap-3" id="humor-thierry">
+                <button onclick="definirHumor('thierry', 'Feliz', '😊', this)" class="humor-btn bg-white dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-3 rounded-2xl hover:bg-romance-50 dark:hover:bg-zinc-700 transition-all text-left px-4">😊 Feliz</button>
+                <button onclick="definirHumor('thierry', 'Cansado', '😴', this)" class="humor-btn bg-white dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-3 rounded-2xl hover:bg-romance-50 dark:hover:bg-zinc-700 transition-all text-left px-4">😴 Cansado</button>
+                <button onclick="definirHumor('thierry', 'Saudade', '🥺', this)" class="humor-btn bg-white dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-3 rounded-2xl hover:bg-romance-50 dark:hover:bg-zinc-700 transition-all text-left px-4">🥺 Saudade</button>
+                <button onclick="definirHumor('thierry', 'Estressado', '😡', this)" class="humor-btn bg-white dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-3 rounded-2xl hover:bg-romance-50 dark:hover:bg-zinc-700 transition-all text-left px-4">😡 Estressado</button>
+            </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-3" id="humor-ela">
-            <button onclick="definirHumor('ela', 'Feliz', '😊')" class="humor-btn border p-3 rounded-2xl">😊 Feliz</button>
-
-            <button onclick="definirHumor('ela', 'Cansada', '😴')" class="humor-btn border p-3 rounded-2xl">😴 Cansada</button>
-
-            <button onclick="definirHumor('ela', 'Saudade', '🥺')" class="humor-btn border p-3 rounded-2xl">🥺 Saudade</button>
-
-            <button onclick="definirHumor('ela', 'Estressada', '😡')" class="humor-btn border p-3 rounded-2xl">😡 Estressada</button>
+        <!-- Mony -->
+        <div>
+            <p class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">Humor da Mony:</p>
+            <div class="grid grid-cols-2 gap-3" id="humor-ela">
+                <button onclick="definirHumor('ela', 'Feliz', '😊', this)" class="humor-btn bg-white dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-3 rounded-2xl hover:bg-romance-50 dark:hover:bg-zinc-700 transition-all text-left px-4">😊 Feliz</button>
+                <button onclick="definirHumor('ela', 'Cansada', '😴', this)" class="humor-btn bg-white dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-3 rounded-2xl hover:bg-romance-50 dark:hover:bg-zinc-700 transition-all text-left px-4">😴 Cansada</button>
+                <button onclick="definirHumor('ela', 'Saudade', '🥺', this)" class="humor-btn bg-white dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-3 rounded-2xl hover:bg-romance-50 dark:hover:bg-zinc-700 transition-all text-left px-4">🥺 Saudade</button>
+                <button onclick="definirHumor('ela', 'Estressada', '😡', this)" class="humor-btn bg-white dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-3 rounded-2xl hover:bg-romance-50 dark:hover:bg-zinc-700 transition-all text-left px-4">😡 Estressada</button>
+            </div>
         </div>
     </section>
 
-    <section class="glass-card rounded-3xl p-6 mb-6">
-        <h2 class="text-xl font-bold mb-4">Nosso Jogo 💞</h2>
+    <!-- Seção Jogo -->
+    <section class="glass-card rounded-3xl p-6 mb-6 shadow-sm">
+        <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+            <i data-lucide="dices" class="w-5 h-5 text-romance-500"></i> Nosso Jogo 💞
+        </h2>
 
         <div class="grid grid-cols-2 gap-4">
-            <button onclick="modoFofo()" class="bg-pink-500 text-white p-3 rounded-2xl">
+            <button onclick="modoFofo()" class="bg-pink-500 hover:bg-pink-600 text-white font-bold p-3 rounded-2xl shadow-sm transition-all active:scale-95">
                 💖 Modo Fofo
             </button>
 
-            <button onclick="modoQuente()" class="bg-red-500 text-white p-3 rounded-2xl">
+            <button onclick="modoQuente()" class="bg-red-500 hover:bg-red-600 text-white font-bold p-3 rounded-2xl shadow-sm transition-all active:scale-95">
                 🔥 Modo Safadinho
             </button>
         </div>
 
-        <div id="jogoResultado" class="mt-6 p-4 rounded-2xl bg-white dark:bg-zinc-900 border text-center italic">
-            Escolha um modo 😭
+        <div id="jogoResultado" class="mt-6 p-4 rounded-2xl bg-white dark:bg-zinc-900/50 border border-gray-100 dark:border-zinc-800 text-center italic text-lg shadow-inner min-h-[60px] flex items-center justify-center">
+            Escolha um modo acima! 🥰
         </div>
     </section>
 
 </div>
 
 <script>
-
-const FRASES_ROMANTICAS_PADRAO = [
-    "Você é meu lugar favorito no mundo ❤️",
-    "Seu sorriso melhora qualquer dia meu ❤️",
-    "Você é minha paz ❤️",
-    "Eu amo você ❤️",
-    "Você é meu eterno favorito ❤️"
-];
-
 const DESAFIOS_FOFOS = [
     "Diga 3 coisas que fizeram você se apaixonar por mim 💕",
-    "Me dê um abraço apertado 🥺",
-    "Faça uma massagem relaxante 💆"
+    "Me dê um abraço apertado de 30 segundos 🥺",
+    "Faça uma massagem relaxante onde o outro escolher 💆",
+    "Diga qual é a sua memória favorita ao meu lado hoje ✨",
+    "Dê 5 beijinhos rápidos no rosto de quem escolheu 💋"
 ];
 
 const DESAFIOS_QUENTES = [
-    "Faça um carinho demorado 🔥",
-    "Dê um beijo onde quiser 😈",
-    "Mande uma mensagem provocativa 🔥",
-    "Você escolhe 😉",
-    "Faça um chupão onde quiser 😈"
+    "Faça um carinho demorado e arrepiante 🔥",
+    "Dê um beijo demorado onde você quiser 😈",
+    "Mande uma mensagem bem provocativa no WhatsApp agora mesmo 🔥",
+    "Você ganhou o direito de fazer um pedido ousado 😉",
+    "Faça um cafuné ou massagem bem lenta e cheia de segundas intenções 😈"
 ];
 
+// Alternância de Tema Escuro / Claro
 function trocarTema() {
-    document.documentElement.classList.toggle('dark');
+    const isDark = document.documentElement.classList.toggle('dark');
+    const icon = document.getElementById('theme-icon');
+    
+    if (isDark) {
+        icon.setAttribute('data-lucide', 'sun');
+    } else {
+        icon.setAttribute('data-lucide', 'moon');
+    }
+    // Re-renderiza apenas o ícone modificado
+    lucide.createIcons();
 }
 
-function definirHumor(pessoa, humor, emoji) {
+// Lógica de humor com persistência visual e de dados
+function definirHumor(pessoa, humor, emoji, elementoBotao) {
     localStorage.setItem(`humor_${pessoa}`, JSON.stringify({ humor, emoji }));
+    
+    // Remove destaque de todos os botões do respectivo container
+    const container = document.getElementById(`humor-${pessoa}`);
+    container.querySelectorAll('.humor-btn').forEach(btn => {
+        btn.classList.remove('border-romance-500', 'bg-romance-50', 'dark:bg-zinc-800', 'ring-2', 'ring-romance-300');
+    });
 
-    criarEfeitoCoracoes(5);
+    // Adiciona destaque ao botão clicado
+    elementoBotao.classList.add('border-romance-500', 'bg-romance-50', 'dark:bg-zinc-800', 'ring-2', 'ring-romance-300');
+
+    criarEfeitoCoracoes(6);
+}
+
+// Carregar humor salvo ao abrir a página
+function carregarHumoresSalvos() {
+    ['thierry', 'ela'].forEach(pessoa => {
+        const salvo = localStorage.getItem(`humor_${pessoa}`);
+        if (salvo) {
+            const dados = JSON.parse(salvo);
+            const container = document.getElementById(`humor-${pessoa}`);
+            const botoes = container.querySelectorAll('.humor-btn');
+            
+            botoes.forEach(btn => {
+                if (btn.innerText.includes(dados.humor)) {
+                    btn.classList.add('border-romance-500', 'bg-romance-50', 'dark:bg-zinc-800', 'ring-2', 'ring-romance-300');
+                }
+            });
+        }
+    });
 }
 
 function modoFofo() {
     const res = document.getElementById('jogoResultado');
-
     const desafio = DESAFIOS_FOFOS[Math.floor(Math.random() * DESAFIOS_FOFOS.length)];
-
     res.innerHTML = `💖 ${desafio}`;
-
-    criarEfeitoCoracoes(10);
+    criarEfeitoCoracoes(12);
 }
 
 function modoQuente() {
     const res = document.getElementById('jogoResultado');
-
-    const desafio = DESAFIOS_QUENTES[Math.floor(Math.random() * DESAFIOS_QUENTES.length)];
-
+    const desafio = DESAFIES_QUENTES = DESAFIOS_QUENTES[Math.floor(Math.random() * DESAFIOS_QUENTES.length)];
     res.innerHTML = `🔥 ${desafio}`;
-
-    criarEfeitoCoracoes(10);
+    criarEfeitoCoracoes(12);
 }
 
+// Animação de corações subindo pela tela
 function criarEfeitoCoracoes(qtd) {
     for (let i = 0; i < qtd; i++) {
         const heart = document.createElement('div');
-
         heart.classList.add('heart-particle');
-
         heart.innerHTML = '❤️';
-
-        heart.style.left = Math.random() * 100 + 'vw';
-
-        heart.style.fontSize = (Math.random() * 20 + 12) + 'px';
+        
+        // Espaçamento e tamanhos aleatórios para dinâmica natural
+        heart.style.left = (Math.random() * 95) + 'vw';
+        heart.style.fontSize = (Math.random() * 20 + 16) + 'px';
+        heart.style.animationDelay = (Math.random() * 0.5) + 's';
 
         document.body.appendChild(heart);
 
+        // Remove o elemento após a animação terminar
         setTimeout(() => {
             heart.remove();
-        }, 6000);
+        }, 5000);
     }
 }
 
+// Inicializações básicas no carregamento da janela
 window.onload = () => {
     lucide.createIcons();
+    carregarHumoresSalvos();
 };
-
 </script>
 
 </body>
